@@ -5,7 +5,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Login from './components/Login/Login'
 import Home from './components/Home/Home'
 import LandingPage from './components/LandingPage/LandingPage';
-import Nav from './Nav/Nav';
+//import Nav from './Nav/Nav';
 import Detail from './components/Views/Detail';
 import About from './components/Views/About';
 import NewDog from './components/Views/NewDog';

@@ -1,20 +1,19 @@
 //import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {CardContainer, CardImage, CardGrid} from './StyledCard'
+import {CardContainer, Img, Head, TextBox, Span} from './StyledCard'
 
 function Card({ id, name, image, temperaments, weight }) {
     return (
-        <CardGrid>
-            <CardContainer>
-            <h1>{name}</h1>
-            <CardImage src={image} alt="dog" />
-            <h3>{temperaments.join(', ')}</h3>
-            <h3>{weight.join(' - ')} Kg</h3>
+        <CardContainer>
+            <Img src={image} alt="dog" />
+            <TextBox>
             <Link to={`/home/${id}`}>
-                <button>More Info</button>
+            <Head>{name}</Head>
             </Link>
-            </CardContainer>
-        </CardGrid>
+            <Span>{temperaments.join(', ')}</Span>
+            <Span>{weight.join(' - ')} Kg</Span>
+            </TextBox>
+        </CardContainer>
     )
 };
 

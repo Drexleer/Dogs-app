@@ -5,6 +5,10 @@ import { getAllDogs, getTemperaments, getDogName, orderByTemperament, orderByOri
 orderByWeight } from '../../redux/actions';
 import Pagination from "../Pagination/Pagination";
 import { Link } from "react-router-dom";
+import { HomeContainer, FiltersContainer, FilterSelect, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox} from './StyledHome'
+import { FaSearch } from "react-icons/fa";
+import { IoMdRefresh } from "react-icons/io";
+
 
 export default function Home() {
   //* Traemos el estado global
@@ -18,7 +22,7 @@ export default function Home() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  //* Estado de filtros
+  //* Estados locales
   const [temperamentFilter, setTemperamentFilter] = useState("");
 
  //* Paginado
@@ -76,30 +80,28 @@ const handleSearchButtonClick = () => {
   // Iniciar la búsqueda cuando se hace clic en el botón
   dispatch(getDogName(searchTerm));
   setCurrentPage(1);
+  setSearchTerm("");
 };
 
   return (
-    <div className="home-page">
-        <div>
+    <div>
             <Link to={"/home/newDog"}>NewDog</Link>
-          <div>
+          <ContainerSearch>
             <nav>
-              <input
+              <Input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={handleInputSearch}
               />
-              <button type="button" onClick={handleSearchButtonClick}>
-                Search
-              </button>
+              <SearchButton type="button" onClick={handleSearchButtonClick}>
+              <FaSearch/>
+              </SearchButton>
             </nav>
-          </div>
-            <div>
-              <button onClick={(e) => handleReset(e)}>Reset</button>
-              </div>
-                  <div>
-                    <select
+          </ContainerSearch>
+          <FiltersContainer>
+                  <SelectBox>
+                    <SelectElement
                         defaultValue={'DEFAULT'}
                         onChange={(e) => {
                             handleFilterTemperament(e);
@@ -116,11 +118,10 @@ const handleSearchButtonClick = () => {
                                     </option>
                                 );
                             })}
-                    </select>
-                </div>
-              </div>
-              <div>
-                <select defaultValue={'DEFAULT'}
+                    </SelectElement>
+                </SelectBox>
+              <SelectBox>
+                <SelectElement defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterOrigin(e);
                 }}
@@ -131,10 +132,10 @@ const handleSearchButtonClick = () => {
                     <option value="all">All</option>
                     <option value="db">DataBase</option>
                     <option value="api">API</option>
-                </select>
-              </div>
-              <div>
-                <select defaultValue={'DEFAULT'}
+                </SelectElement>
+              </SelectBox>
+              <SelectBox>
+                <SelectElement defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterName(e);
                 }}
@@ -144,10 +145,10 @@ const handleSearchButtonClick = () => {
                   </option>
                   <option value="upward">[A-Z] Upward</option>
                   <option value="falling">[z-A] Falling</option>
-                </select>
-              </div>
-              <div>
-                <select defaultValue={'DEFAULT'}
+                </SelectElement>
+              </SelectBox>
+              <SelectBox>
+                <SelectElement defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterWeight(e);
                 }}
@@ -157,9 +158,13 @@ const handleSearchButtonClick = () => {
                   </option>
                   <option value="minor">Minor to Major</option>
                   <option value="major">Major to Minor</option>
-                </select>
+                </SelectElement>
+              </SelectBox>
+              <div>
+              <ResetButton onClick={(e) => handleReset(e)}><IoMdRefresh style={{ fontSize: "25px" }}/></ResetButton>
               </div>
-        <div>
+          </FiltersContainer>
+        <HomeContainer>
           {currentDogs.map((dog) => (
             <Card
               key={dog.id}
@@ -170,7 +175,7 @@ const handleSearchButtonClick = () => {
               weight={dog.weight}
             />
           ))}
-        </div>
+        </HomeContainer>
         <Pagination
         currentPage={currentPage}
         dogsPerPage={dogsPerPage}
