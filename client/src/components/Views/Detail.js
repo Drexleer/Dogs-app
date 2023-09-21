@@ -2,7 +2,19 @@ import { Link, useParams } from 'react-router-dom';
 import { getDogById } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
+import {
+    Card,
+    DivCard,
+    Img,
+    Ul,
+    TextH2,
+    TextH1,
+    TextH3,
+    LearnMoreButton,
+    ButtonLink } from './StyledDetail';
+import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
+import {FaTemperatureHigh} from 'react-icons/fa';
+import { TiArrowBack } from 'react-icons/ti';
 
 export default function Detail() {
 
@@ -18,34 +30,34 @@ export default function Detail() {
 
 
   return (
-    <div>
-        <Link to={'/home'}>Volver</Link>
+    <DivCard>
+        <Link to={'/home'}><LearnMoreButton>Go Back</LearnMoreButton></Link>
         {breedDetail.length ? ( 
-        <div>
+        <Card>
             <div>
-                <img src={breedDetail[0].image} alt="breed-detail" width={"400px"}/>
-            </div>
-            <div>
-                <h1>{breedDetail[0].name}</h1>
-                <h2>Weight:</h2>
-                <h3>{breedDetail[0].weight.join(' - ')} Kg.</h3>
-                <h2>Height:</h2>
-                <h3>{breedDetail[0].height.join(' - ')} Cm.</h3>
-                <h2>Life Span:</h2>
-                <h3>{breedDetail[0].life_span.join(' - ')} Years.</h3>
-                <h2>Temperaments:</h2>
-                <div>
+                <Img src={breedDetail[0].image} alt="breed-detail" width={"400px"}/>
+                <h2>Temperaments <FaTemperatureHigh/>:</h2>
+                <Ul>
                 {breedDetail[0].temperaments
                     ? breedDetail[0].temperaments.map((temperament, index) => (
-                    <h2 key={index}>{temperament}</h2>
+                    <ButtonLink key={index}>{temperament}</ButtonLink>
                 ))
                     : null}
-                </div>
+                </Ul>
             </div>
-        </div>) 
-        : (
+            <div>
+                <TextH1>{breedDetail[0].name}</TextH1>
+                <TextH2>Weight <GiWeight color='5F5F5F'/>:</TextH2>
+                <TextH3>{breedDetail[0].weight.join(' - ')} Kg.</TextH3>
+                <TextH2>Height <GiBodyHeight/>:</TextH2>
+                <TextH3>{breedDetail[0].height.join(' - ')} Cm.</TextH3>
+                <TextH2>Life Span <GiHeartBeats color='red'/>:</TextH2>
+                <TextH3>{breedDetail[0].life_span.join(' - ')} Years.</TextH3>
+            </div>
+        </Card>) 
+        : ( 
         <>Bye</>
         )}
-    </div>
+    </DivCard>
   )
 }

@@ -1,10 +1,13 @@
 import styled, { keyframes} from 'styled-components';
-import { raisinBlack, blue } from '../Utils/Colors'
+import { Text, Silver } from '../Utils/Colors';
 
 export const CardContainer = styled.div`
   width: 100%;
   height: 350px;
-  background: ${raisinBlack};
+  background: linear-gradient(45deg, #ffffff 20%, transparent 20%, transparent 80%, #ffffff 80%),linear-gradient(135deg, #ffffff 40%, #E7D8C9 40%, #E7D8C9 60%, #E7D8C9 60%, #ffffff 60%) , linear-gradient(45deg, #ffffff 20%, #E7D8C9 20%, #E7D8C9 80%, #ffffff 80%);
+        background-size: 2em 2em;
+        background-color: #ffffff;
+        opacity: 1;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -70,12 +73,14 @@ export const Head = styled.div`
   font-family: monospace;
   text-align: center;
   text-shadow: 4px 2.5px 2px rgba(0, 0, 0, 1);
+  color: ${Silver};
+  text-decoration: none;
 `;
 
 export const Span = styled.div`
   font-size: 25px;
   text-align: center;
   font-family: monospace;
-  color: ${blue};
+  color: ${Text};
   text-shadow: 2px 1px 1px rgba(0, 0, 0, 1);
 `;

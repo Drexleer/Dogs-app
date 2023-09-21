@@ -5,7 +5,7 @@ import { getAllDogs, getTemperaments, getDogName, orderByTemperament, orderByOri
 orderByWeight } from '../../redux/actions';
 import Pagination from "../Pagination/Pagination";
 import { Link } from "react-router-dom";
-import { HomeContainer, FiltersContainer, FilterSelect, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox} from './StyledHome'
+import { HomeContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox} from './StyledHome'
 import { FaSearch } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 
@@ -161,7 +161,7 @@ const handleSearchButtonClick = () => {
                 </SelectElement>
               </SelectBox>
               <div>
-              <ResetButton onClick={(e) => handleReset(e)}><IoMdRefresh style={{ fontSize: "25px" }}/></ResetButton>
+              <ResetButton onClick={(e) => handleReset(e)}><IoMdRefresh/> Refresh</ResetButton>
               </div>
           </FiltersContainer>
         <HomeContainer>

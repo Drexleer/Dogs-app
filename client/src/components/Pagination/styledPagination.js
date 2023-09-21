@@ -1,69 +1,56 @@
 import styled from 'styled-components';
+import { beige, Ecru, Text} from '../Utils/Colors';
 
-export const ButtonContainer = styled.div`
-    display: flex;
-    margin: 0; /* Centramos horizontalmente el contenedor */
-    justify-content: center; /* Centramos horizontalmente el contenido */
-    padding: 0;
 
+export const Container = styled.div`
+  width: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 3em 3em 0 3em;
+  border-radius: 9999px;
+  background-color: ${beige};
+  color: #000000;
+  width: var(--container_width);
+  overflow: hidden;
+  border: 1px solid rgba(53, 52, 52, 0.226);
 `;
 
-export const ArrowButton = styled.button`
-  color: transparent;
-  display: block;
-  margin-top: 2em;
-  margin-bottom: 0;
-  margin-left: 7em;
-  position: relative;
-  width: 4rem;
-  height: 4rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: all 150ms ease-out;
+export const Label = styled.label`
+   width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  font-weight: 600;
+  letter-spacing: -1px;
+  font-size: 14px;
+  position: relative; /* Agrega posición relativa para establecer estilos en Selection */
+  
+  /* Establece el estilo de hover en RadioInputLabel */
+  &:hover {
+    background-color: ${Ecru}; /* Reemplaza con el color deseado */
+    color: black; /* Reemplaza con el color de texto deseado */
+  }
 
-  &::before,
+  /* Establece el estilo de hover en Selection */
   &::after {
-    content: "";
-    display: block;
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #E5E5E5;
-    transition: all 150ms ease-out;
+    width: 100%;
+    height: 100%;
+    background-color: ${Text}; /* Reemplaza con el color deseado */
+    opacity: 0; /* Inicialmente invisible */
+    pointer-events: none; /* Evita que capture eventos de ratón */
+    z-index: -1;
   }
 
-  &::before {
-    width: 75%;
-    height: 25%;
-  }
-
-  &::after {
-    width: 25%;
-    height: 75%;
-  }
-
-  &:hover, &:focus {
-    background-color: rgba(0, 0, 0, 0.3);
-
-    &::before,
-    &::after {
-      background-color: #BDBDBD;
-    }
-  }
-
-  &.btn-arrow-left,
-  &.btn-arrow-right {
-    &::before,
-    &::after {
-      top: 12.5%;
-      left: 12.5%;
-    }
-  }
-
-  &.btn-arrow-left {
-    transform: rotate(-45deg);
-  }
-
-  &.btn-arrow-right {
-    transform: rotate(135deg);
+  /* Establece el estilo de hover en Selection cuando el número está seleccionado */
+  &.active::after {
+    opacity: 1; /* Mostrar cuando está activo */
   }
 `;
