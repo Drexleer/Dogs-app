@@ -11,10 +11,10 @@ import {
     TextH1,
     TextH3,
     LearnMoreButton,
-    ButtonLink } from './StyledDetail';
+    ButtonTemperament } from './StyledDetail';
 import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
 import {FaTemperatureHigh} from 'react-icons/fa';
-import { TiArrowBack } from 'react-icons/ti';
+import { MdNumbers } from 'react-icons/md';
 
 export default function Detail() {
 
@@ -40,14 +40,16 @@ export default function Detail() {
                 <Ul>
                 {breedDetail[0].temperaments
                     ? breedDetail[0].temperaments.map((temperament, index) => (
-                    <ButtonLink key={index}>{temperament}</ButtonLink>
+                    <ButtonTemperament key={index}>{temperament}</ButtonTemperament>
                 ))
                     : null}
                 </Ul>
             </div>
             <div>
                 <TextH1>{breedDetail[0].name}</TextH1>
-                <TextH2>Weight <GiWeight color='5F5F5F'/>:</TextH2>
+                <TextH2>ID<MdNumbers color='D7861A'/>:</TextH2>
+                <TextH3>{breedDetail[0].id}</TextH3>
+                <TextH2>Weight <GiWeight color='4C4C4C'/>:</TextH2>
                 <TextH3>{breedDetail[0].weight.join(' - ')} Kg.</TextH3>
                 <TextH2>Height <GiBodyHeight/>:</TextH2>
                 <TextH3>{breedDetail[0].height.join(' - ')} Cm.</TextH3>

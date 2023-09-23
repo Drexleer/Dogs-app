@@ -54,7 +54,7 @@ export const TextH1 = styled.h1`
 export const TextH2 = styled.h2`
   margin: 0; /* Centrar el texto horizontalmente */
   font-family: Arial, Helvetica, sans-serif;
-  padding: 1em;
+  padding: 0.5em;
 `;
 export const TextH3 = styled.h3`
   margin: 0; /* Centrar el texto horizontalmente */
@@ -68,7 +68,7 @@ display: grid;
 `;
 
 // Estilos para los enlaces que se comportan como botones
-export const ButtonLink = styled.a`
+export const ButtonTemperament = styled.a`
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;

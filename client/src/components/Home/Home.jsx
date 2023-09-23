@@ -5,7 +5,7 @@ import { getAllDogs, getTemperaments, getDogName, orderByTemperament, orderByOri
 orderByWeight } from '../../redux/actions';
 import Pagination from "../Pagination/Pagination";
 import { Link } from "react-router-dom";
-import { HomeContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox} from './StyledHome'
+import { HomeContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox, LinkStyled, ImgNewDog, NewDogButton} from './StyledHome'
 import { FaSearch } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 
@@ -85,9 +85,13 @@ const handleSearchButtonClick = () => {
 
   return (
     <div>
-            <Link to={"/home/newDog"}>NewDog</Link>
           <ContainerSearch>
-            <nav>
+                <LinkStyled to={"/home/newDog"}>
+                <NewDogButton>
+                <ImgNewDog src="https://static.vecteezy.com/system/resources/previews/009/637/596/original/dog-cartoon-cute-animal-file-png.png" alt="create-dog"/>
+                  CreateDog
+                </NewDogButton>                
+                </LinkStyled>
               <Input
               type="text"
               placeholder="Search..."
@@ -97,7 +101,6 @@ const handleSearchButtonClick = () => {
               <SearchButton type="button" onClick={handleSearchButtonClick}>
               <FaSearch/>
               </SearchButton>
-            </nav>
           </ContainerSearch>
           <FiltersContainer>
                   <SelectBox>

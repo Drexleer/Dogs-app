@@ -2,6 +2,7 @@ import { useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link} from 'react-router-dom'
 import { postDog, getTemperaments } from '../../redux/actions'
+import { Container, RightContainer, LeftContainer, Temperaments, BackButton, CreateButton, Text, Icon, IconContainer, WarningSpan} from './StyledDog'
 
 export default function NewDog() {
 
@@ -26,7 +27,7 @@ export default function NewDog() {
     
 
     //* ESTADOS PARA VALIDAR EL FORMULARIO
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState('');
     const [nameError, setNameError] = useState('');
 
     function validateForm(input) {
@@ -139,14 +140,18 @@ export default function NewDog() {
     }
 
     return (
-        <div>
-            <Link className="buttonBack" to="/home">
-                Volver
+        <Container>
+            <LeftContainer>
+                <img src="https://freepngimg.com/thumb/dog/83-dog-png-image.png" alt="dog" />
+            <Link to="/home">
+                <BackButton>Go Back</BackButton>
             </Link>
-            <form>
+            </LeftContainer>
+            <RightContainer>
+                <h1>Create a new dog with the characteristics you want♥️</h1>
                 <div>
-                    <label>Name</label>
-                    <input
+                    <label>Name:</label>
+                    <input style={{display: "flex"}}
                     placeholder='Name'
                     onChange={(e) => {
                         handleInputChange(e.target.name, e.target.value);
@@ -156,10 +161,9 @@ export default function NewDog() {
                     value={form.name}
                     />
                     {errors.name ? (
-                        <span style={{ color: 'red' }}>{errors.name}</span>
+                        <WarningSpan>{errors.name}</WarningSpan>
                     ) : null}
                 </div>
-                <hr />
                 <div>
                     <label>Height:</label>
                     <input
@@ -177,10 +181,16 @@ export default function NewDog() {
                     name='max_height'
                     value={form.max_height}
                     />
+                    <WarningSpan>
+                        {errors.min_height && !errors.max_height
+                            ? errors.min_height
+                            : errors.max_height && !errors.min_height
+                            ? errors.max_height
+                            : errors.min_height && errors.max_height
+                            ? 'Por favor ingresa valores válidos'
+                            : null}
+                    </WarningSpan>
                 </div>
-                <span style={{ color: 'red' }}>{errors.min_height}</span>
-                <span style={{ color: 'red' }}>{errors.max_height}</span>
-                <hr />
                 <div>
                     <label>Weight:</label>
                     <input
@@ -197,10 +207,16 @@ export default function NewDog() {
                     name='max_weight'
                     value={form.max_weight}
                     />
+                    <WarningSpan>
+                        {errors.min_weight && !errors.max_weight 
+                        ? errors.min_weight
+                        : errors.max_weight && !errors.min_weight
+                        ? errors.max_weight
+                        : errors.min_weight && errors.max_weight
+                        ? 'Por favor ingresa valores válidos'
+                        : null}
+                    </WarningSpan>
                 </div>
-                <span style={{ color: 'red' }}>{errors.min_weight}</span>
-                <span style={{ color: 'red' }}>{errors.max_weight}</span>
-                <hr />
                 <div>
                     <label>Life:</label>
                     <input
@@ -217,11 +233,16 @@ export default function NewDog() {
                     name='max_life'
                     value={form.max_life}
                     />
+                    <WarningSpan>
+                        {errors.min_life && !errors.max_life
+                        ? errors.min_life
+                        : errors.max_life && !errors.min_life
+                        ? errors.max_life
+                        : errors.min_life && errors.max_life
+                        ? 'Por favor ingresa valores válidos'
+                        : null}
+                    </WarningSpan>
                 </div>
-                <span style={{ color: 'red' }}>{errors.min_life}</span>
-                <span style={{ color: 'red' }}>{errors.max_life}</span>
-                <hr />
-                <hr />
                 <div>
                     <label>Image:</label>
                     <input
@@ -233,8 +254,8 @@ export default function NewDog() {
                         value={form.image}
                     />
                 </div>
-                <hr />
                 <div>
+                    <label>Temperaments:</label>
                     <select
                         defaultValue={'DEFAULT'}
                         onChange={(e) => {
@@ -258,34 +279,50 @@ export default function NewDog() {
                     <ul>
                         {form.temperaments &&
                             form.temperaments.map((option, index) => (
-                                <div>
-                                    <li key={index}>
-                                        {option}
-                                        <button
-                                            className="listButtonTemp"
-                                            onClick={() =>
-                                                handleDeleteTemperament(option)
-                                            }
-                                        >
-                                            X
-                                        </button>
-                                    </li>
-                                </div>
-                            ))}
+                            <div>
+                                <Temperaments key={index} onClick={() => handleDeleteTemperament(option)}>
+                                    <span className="option-text">{option}</span>
+                                </Temperaments>
+                            </div>
+                        ))}
                     </ul>
                 </div>
-                <hr />
-                <button
-                    className="buttonCreate"
+                <div>
+                <CreateButton
+                    className="button"
                     type='submit'
                     onClick={(e) => {
                         createBreed(e);
                     }}
                 >
-                    Create
-                </button>
+                    <Text>CreateDog</Text>
+                    <IconContainer>
+                    <Icon xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" className="svg">
+                        <line y2="19" y1="5" x2="12" x1="12"></line>
+                        <line y2="12" y1="12" x2="19" x1="5"></line>
+                    </Icon>
+                    </IconContainer>
+                </CreateButton>
                 {nameError && <div className="error">{nameError}</div>}
-            </form>
-        </div>
+                </div>
+            </RightContainer>
+        </Container>
     )
 }
+
+
+/*
+<div>
+                                    <button
+                                        className="listButtonTemp"
+                                        onClick={() =>
+                                            handleDeleteTemperament(option)
+                                        }
+                                    >
+                                        <Temperaments key={index}>
+                                            {option}
+                                        </Temperaments>
+                                        <span className="close-icon">x</span>
+                                    </button>
+                                </div>
+*/

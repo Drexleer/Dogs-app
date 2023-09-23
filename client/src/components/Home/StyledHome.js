@@ -1,5 +1,6 @@
 import styled, {keyframes} from "styled-components";
 import { beige, beigeOscuro, Ecru} from "../Utils/Colors";
+import { Link } from "react-router-dom";
 
 export const HomeContainer = styled.div`
   display: grid;
@@ -35,10 +36,9 @@ export const ContainerSearch = styled.div`
 export const Input = styled.input`
 font-family: monospace;
   max-width: 250px; /* Aumentamos el ancho máximo */
-  height: 100%;
+  height: 25px;
   outline: none;
   font-size: 20px; /* Aumentamos el tamaño de fuente */
-  font-weight: 500;
   background-color: #DFDFDF;
   caret-color: ${beige};
   color: #FFFFFF;
@@ -48,6 +48,7 @@ font-family: monospace;
   border-bottom-left-radius: 7px;
   margin-right: 1px;
   transition: all 0.2s ease;
+  margin-left: 1em;
 
   &:hover {
     border: 2px solid ${Ecru};
@@ -143,5 +144,32 @@ export const ResetButton = styled.button`
 
   &:focus svg {
     animation: ${spinAnimation} 0.5s linear;
+  }
+`;
+
+export const LinkStyled = styled(Link)`
+  display: flex;
+  text-decoration: none;
+`;
+
+export const ImgNewDog = styled.img`
+  width: 50px;
+  height: 50px;
+`;
+
+export const NewDogButton = styled.button`
+  display: flex;
+  align-items: center;
+  font-family: monospace;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  background-color: ${beige};
+  border-radius: 7px;
+  width: fit-content;
+  height: fit-content;
+
+  &:hover {
+    background-color: ${Ecru};
   }
 `;
