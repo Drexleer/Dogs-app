@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { getDogById } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -15,6 +16,7 @@ import {
 import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
 import {FaTemperatureHigh} from 'react-icons/fa';
 import { MdNumbers } from 'react-icons/md';
+import Loading from '../loading/loading';
 
 export default function Detail() {
 
@@ -23,26 +25,31 @@ export default function Detail() {
 
     // Traemos el estado de redux
     const breedDetail = useSelector(state => state.breedDetail);
+    // Estado local para el loading
+    const [showLoading, setShowLoading] = useState(true);
 
     useEffect(()=>{
         dispatch(getDogById(id))
+        .then(() => {
+            setShowLoading(false);
+        });
     }, [dispatch, id])
 
 
   return (
     <DivCard>
-        <Link to={'/home'}><LearnMoreButton>Go Back</LearnMoreButton></Link>
-        {breedDetail.length ? ( 
-        <Card>
+        {showLoading ? <Loading/> : null}
+        {!showLoading && breedDetail.length ? ( 
+            <Card>
             <div>
                 <Img src={breedDetail[0].image} alt="breed-detail" width={"400px"}/>
                 <h2>Temperaments <FaTemperatureHigh/>:</h2>
                 <Ul>
                 {breedDetail[0].temperaments
                     ? breedDetail[0].temperaments.map((temperament, index) => (
-                    <ButtonTemperament key={index}>{temperament}</ButtonTemperament>
-                ))
-                    : null}
+                        <ButtonTemperament key={index}>{temperament}</ButtonTemperament>
+                        ))
+                        : null}
                 </Ul>
             </div>
             <div>
@@ -56,10 +63,13 @@ export default function Detail() {
                 <TextH2>Life Span <GiHeartBeats color='red'/>:</TextH2>
                 <TextH3>{breedDetail[0].life_span.join(' - ')} Years.</TextH3>
             </div>
+            <Link to={'/home'}><LearnMoreButton>Go Back</LearnMoreButton></Link>
         </Card>) 
         : ( 
         <>Bye</>
+        
         )}
+        
     </DivCard>
   )
 }

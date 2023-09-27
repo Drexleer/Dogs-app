@@ -19,6 +19,7 @@ export const Img = styled.img`
 export const Card = styled.div`
   display: flex;
   flex-direction: row;
+  position: relative;
   width: 900px;
   //* Background
   background: radial-gradient(circle at top left,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%) , radial-gradient(circle at bottom left,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%), radial-gradient(circle at top right ,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%) , radial-gradient(circle at bottom right,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%),radial-gradient(circle, transparent 25%, #ffffff  26%),linear-gradient(45deg, transparent 46%, #E7D8C9 47%, #E7D8C9 52%, transparent 53%), linear-gradient(135deg, transparent 46%, #E7D8C9 47%, #E7D8C9 52%, transparent 53%);
@@ -33,9 +34,9 @@ export const Card = styled.div`
   border: 1em solid #E7D8C9; /* Borde beige */
 
   &:hover {
-    outline: 2px solid #e8e8e8;
-    //background: transparent;
+    outline: 5px solid #e8e8e8;
     color: black;
+    transform: scale(1.02);
   }
   &:active {
     box-shadow: none;
@@ -104,6 +105,9 @@ export const CustomButton = styled.button`
 `;
 
 export const LearnMoreButton = styled(CustomButton)`
+  position: absolute; /* Colocar el botón en posición absoluta */
+  bottom: 3em; /* Ajustar la distancia desde la parte inferior */
+  right: 1em; /* Ajustar la distancia desde la parte derecha */
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   color: #382b22;

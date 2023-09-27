@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { HomeContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox, LinkStyled, ImgNewDog, NewDogButton} from './StyledHome'
 import { FaSearch } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
+import Loading from "../loading/loading";
 
 
 export default function Home() {
@@ -16,14 +17,18 @@ export default function Home() {
   const breedsFiltered = useSelector((state) => state.breedsFiltered);
   const temperaments = useSelector((state) => state.temperaments);
   const dispatch = useDispatch();
+  
+  //* Estados locales
+  const [showLoader, setShowLoader] = useState(false); 
 
   useEffect(() => {
+    setShowLoader(true);
     dispatch(getAllDogs());
     dispatch(getTemperaments());
+    setShowLoader(false);
   }, [dispatch]);
 
-  //* Estados locales
-  const [temperamentFilter, setTemperamentFilter] = useState("");
+  
 
  //* Paginado
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,14 +46,15 @@ export default function Home() {
   // reset de filtros
   const handleReset = (e) => {
     e.preventDefault();
+    document.querySelectorAll('#SelectTemperament, #SelectOrigin, #SelectAlphabetic, #SelectWeight').forEach((select) => {
+      select.value = 'DEFAULT';
+    });
     dispatch(getAllDogs());
   };
 
   //filtro por temperamentos
   const handleFilterTemperament = (e) => {
     e.preventDefault();
-    const selectedTemperament = e.target.value;
-    setTemperamentFilter(selectedTemperament);
     dispatch(orderByTemperament(e.target.value));
     setCurrentPage(1);
   };
@@ -83,8 +89,13 @@ const handleSearchButtonClick = () => {
   setSearchTerm("");
 };
 
+
   return (
     <div>
+        {showLoader ? (
+          <Loading />
+        ) : (
+          <>
           <ContainerSearch>
                 <LinkStyled to={"/home/newDog"}>
                 <NewDogButton>
@@ -105,26 +116,29 @@ const handleSearchButtonClick = () => {
           <FiltersContainer>
                   <SelectBox>
                     <SelectElement
+                        id="SelectTemperament"
                         defaultValue={'DEFAULT'}
                         onChange={(e) => {
-                            handleFilterTemperament(e);
+                          handleFilterTemperament(e);
                         }}
-                    >
+                        >
                         <option disabled value="DEFAULT">
                             Temperaments
                         </option>
                         {temperaments &&
                             temperaments.map((option) => {
                                 return (
-                                    <option value={option.name} key={option.id}>
+                                  <option value={option.name} key={option.id}>
                                         {option.name}
                                     </option>
                                 );
-                            })}
+                              })}
                     </SelectElement>
                 </SelectBox>
               <SelectBox>
-                <SelectElement defaultValue={'DEFAULT'}
+                <SelectElement 
+                id="SelectOrigin"
+                defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterOrigin(e);
                 }}
@@ -138,7 +152,9 @@ const handleSearchButtonClick = () => {
                 </SelectElement>
               </SelectBox>
               <SelectBox>
-                <SelectElement defaultValue={'DEFAULT'}
+                <SelectElement
+                id="SelectAlphabetic" 
+                defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterName(e);
                 }}
@@ -151,7 +167,9 @@ const handleSearchButtonClick = () => {
                 </SelectElement>
               </SelectBox>
               <SelectBox>
-                <SelectElement defaultValue={'DEFAULT'}
+                <SelectElement 
+                id="SelectWeight"
+                defaultValue={'DEFAULT'}
                 onChange={(e) => {
                   handleFilterWeight(e);
                 }}
@@ -170,14 +188,14 @@ const handleSearchButtonClick = () => {
         <HomeContainer>
           {currentDogs.map((dog) => (
             <Card
-              key={dog.id}
-              id={dog.id}
-              name={dog.name}
-              image={dog.image}
-              temperaments={dog.temperaments}
-              weight={dog.weight}
+            key={dog.id}
+            id={dog.id}
+            name={dog.name}
+            image={dog.image}
+            temperaments={dog.temperaments}
+            weight={dog.weight}
             />
-          ))}
+            ))}
         </HomeContainer>
         <Pagination
         currentPage={currentPage}
@@ -185,7 +203,9 @@ const handleSearchButtonClick = () => {
         totalDogs={breedsFiltered.length}
         onPageChange={paginate}
         currentDogs={currentDogs}
-      />
+        />
+    </>
+        )}
     </div>
   );
 }

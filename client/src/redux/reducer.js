@@ -6,7 +6,7 @@ import { GET_ALL_DOGS,
     ORDER_BY_NAME, 
     ORDER_BY_WEIGHT, 
     ORDER_BY_ORIGIN, 
-    ORDER_BY_TEMPERAMENT, 
+    ORDER_BY_TEMPERAMENT,
     POST_DOG, } from './actions-types';
 
 const initialState = {
@@ -117,6 +117,7 @@ function dogReducer ( state = initialState, action) {
             }
         default: return state;
     }
-}
+};
 
 export default dogReducer;
+

@@ -9,7 +9,11 @@ export const HomeContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px;
-`;
+  img {
+    width: 90%;
+    height: 90%;
+  }
+  `;
 
 export const FiltersContainer = styled.div`
   display: flex;
@@ -41,8 +45,8 @@ font-family: monospace;
   font-size: 20px; /* Aumentamos el tamaño de fuente */
   background-color: #DFDFDF;
   caret-color: ${beige};
-  color: #FFFFFF;
-  padding: 10px 15px; /* Aumentamos el padding para hacerlo más grande */
+  color: black;
+  padding: 20px 15px; /* Aumentamos el padding para hacerlo más grande */
   border: 2px solid transparent;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
