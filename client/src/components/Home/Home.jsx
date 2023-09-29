@@ -19,13 +19,14 @@ export default function Home() {
   const dispatch = useDispatch();
   
   //* Estados locales
-  const [showLoader, setShowLoader] = useState(false); 
+  const [showLoading, setShowLoading] = useState(true); 
 
   useEffect(() => {
-    setShowLoader(true);
-    dispatch(getAllDogs());
+    dispatch(getAllDogs())
+    .then(() => {
+      setShowLoading(false);
+    });
     dispatch(getTemperaments());
-    setShowLoader(false);
   }, [dispatch]);
 
   
@@ -92,9 +93,8 @@ const handleSearchButtonClick = () => {
 
   return (
     <div>
-        {showLoader ? (
-          <Loading />
-        ) : (
+        {showLoading ? <Loading/> : null} 
+        {!showLoading && breedsFiltered.length ? (
           <>
           <ContainerSearch>
                 <LinkStyled to={"/home/newDog"}>
@@ -204,7 +204,15 @@ const handleSearchButtonClick = () => {
         onPageChange={paginate}
         currentDogs={currentDogs}
         />
-    </>
+          </>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh"}}>
+          <img
+          src="https://i.pinimg.com/originals/ef/8b/bd/ef8bbd4554dedcc2fd1fd15ab0ebd7a1.gif"
+          alt="Error"
+          style={{ width: "60%"}} // Ajusta el estilo según tus necesidades
+          />
+      </div>
         )}
     </div>
   );

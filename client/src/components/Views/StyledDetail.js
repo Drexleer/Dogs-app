@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes} from "styled-components";
 
 
 // Estilo para el contenedor temporal de almacenamiento
@@ -19,8 +19,8 @@ export const Img = styled.img`
 export const Card = styled.div`
   display: flex;
   flex-direction: row;
-  position: relative;
-  width: 900px;
+  position: static;
+  width: fit-content;
   //* Background
   background: radial-gradient(circle at top left,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%) , radial-gradient(circle at bottom left,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%), radial-gradient(circle at top right ,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%) , radial-gradient(circle at bottom right,transparent 9%, #E7D8C9 10% ,#E7D8C9 15% , transparent 16%),radial-gradient(circle, transparent 25%, #ffffff  26%),linear-gradient(45deg, transparent 46%, #E7D8C9 47%, #E7D8C9 52%, transparent 53%), linear-gradient(135deg, transparent 46%, #E7D8C9 47%, #E7D8C9 52%, transparent 53%);
         background-size: 2em 2em;
@@ -102,12 +102,13 @@ export const CustomButton = styled.button`
   text-decoration: none;
   font-family: inherit;
   font-size: 15px;
+  width: 140px;
 `;
 
 export const LearnMoreButton = styled(CustomButton)`
-  position: absolute; /* Colocar el botón en posición absoluta */
-  bottom: 3em; /* Ajustar la distancia desde la parte inferior */
-  right: 1em; /* Ajustar la distancia desde la parte derecha */
+  position: absolute;
+  bottom: 10px; /* Ajusta la distancia desde la parte inferior según tus necesidades */
+  right: 10px; /* Ajusta la distancia desde la parte derecha según tus necesidades */
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   color: #382b22;
@@ -154,4 +155,78 @@ export const LearnMoreButton = styled(CustomButton)`
     box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
     transform: translate3d(0, 0, -1em);
   }
+`;
+
+const shake = keyframes`
+0% {
+  transform: rotate(0deg);
+}
+33% {
+  transform: rotate(10deg);
+}
+66% {
+  transform: rotate(-10deg);
+}
+100% {
+  transform: rotate(10deg);
+}
+`;
+
+export const ButtonDelete = styled.button`
+position: relative;
+top: 1em; /* Ajusta la distancia desde la parte superior */
+right: 1em; /* Ajusta la distancia desde la derecha */
+width: 150px;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 5px;
+padding: 15px 20px;
+background-color: #212121;
+border: none;
+font: inherit;
+color: #e8e8e8;
+font-size: 20px;
+font-weight: 600;
+border-radius: 50px;
+cursor: not-allowed;
+overflow: hidden;
+transition: all 0.3s ease cubic-bezier(0.23, 1, 0.32, 1);
+
+&:hover {
+  animation: ${shake} 0.2s linear 1;
+}
+
+span {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+&::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateY(105%);
+  background-color: #F53844;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+svg {
+  width: 32px;
+  height: 32px;
+  fill: #F53844;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+&:hover::before {
+  transform: translateY(0);
+}
+
+&:hover svg {
+  fill: #e8e8e8;
+}
 `;

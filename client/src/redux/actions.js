@@ -13,51 +13,71 @@ const urlApi = 'http://localhost:3001';
 
 export function getAllDogs () {
     return async function (dispatch) {
-        let response = await axios.get(`${urlApi}/alldogs`);
-        return dispatch({
+        try {
+            let response = await axios.get(`${urlApi}/alldogs`);
+            return dispatch({
             type: GET_ALL_DOGS,
             payload: response.data
         })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 
 export function getTemperaments () {
     return async function (dispatch) {
-        let response = await axios.get(`${urlApi}/temperaments`);
-        return dispatch({
+        try {
+            let response = await axios.get(`${urlApi}/temperaments`);
+            return dispatch({
             type: GET_TEMPERAMENTS,
             payload: response.data
         })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 
 export function getDogName (payload) {
     return async function (dispatch) {
-        let response = await axios.get(`${urlApi}/dogs?name=${payload}`);
-        return dispatch({
+        try {
+            let response = await axios.get(`${urlApi}/dogs?name=${payload}`);
+            return dispatch({
             type: SEARCH_BY_NAME,
             payload: response.data
         })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 
 export function getDogById (payload) {
     return async function (dispatch){
-        let response = await axios.get(`${urlApi}/dogs/${payload}`);
-        return dispatch({
+        try {
+            let response = await axios.get(`${urlApi}/dogs/${payload}`);
+            return dispatch({
             type: SEARCH_DOG_BY_ID,
             payload: response.data
         })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 
 export function postDog (payload) {
     return async function (dispatch) {
-        let response = await axios.post(`${urlApi}/dog`, payload);
-        return dispatch({
+        try {
+            let response = await axios.post(`${urlApi}/dog`, payload);
+            return dispatch({
             type: POST_DOG,
             payload: response,
         })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 

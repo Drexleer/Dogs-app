@@ -6,6 +6,7 @@ const createDog = require('../controllers/createDog');
 const getTemperaments = require('../controllers/getTemperaments');
 const { apiData, dbData } = require('../controllers/getDogsApis')
 const login = require('../controllers/login');
+const deleteDog = require('../controllers/deleteDog');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -22,5 +23,6 @@ router.use('/alldogs', getAllDogs);
 router.use('/temperaments', getTemperaments);
 router.use('/api', apiData)
 router.use('/db', dbData)
+router.use('/delete/:id', deleteDog)
 
 module.exports = router;

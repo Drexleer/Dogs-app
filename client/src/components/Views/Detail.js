@@ -1,8 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { getDogById } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import axios from 'axios';
 import {
     Card,
     DivCard,
@@ -12,6 +13,7 @@ import {
     TextH1,
     TextH3,
     LearnMoreButton,
+    ButtonDelete,
     ButtonTemperament } from './StyledDetail';
 import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
 import {FaTemperatureHigh} from 'react-icons/fa';
@@ -22,11 +24,26 @@ export default function Detail() {
 
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Traemos el estado de redux
     const breedDetail = useSelector(state => state.breedDetail);
     // Estado local para el loading
     const [showLoading, setShowLoading] = useState(true);
+
+    const handleDelete = async (dogId) => {
+        const confirmed = window.confirm('Are you sure you want to delete this dog?');
+        
+        if(confirmed) {
+            try {
+                await axios.delete(`http://localhost:3001/delete/${dogId}`)
+                window.alert('The dog has been successfully deleted.');
+                navigate('/home')
+            } catch (error) {
+                console.error('Error al eliminar el perro:', error);
+            }
+        }
+    };
 
     useEffect(()=>{
         dispatch(getDogById(id))
@@ -64,12 +81,16 @@ export default function Detail() {
                 <TextH3>{breedDetail[0].life_span.join(' - ')} Years.</TextH3>
             </div>
             <Link to={'/home'}><LearnMoreButton>Go Back</LearnMoreButton></Link>
+            {id.length > 5 ? (
+                <ButtonDelete onClick={()=> {handleDelete(id)}}>
+                <span>DELETE</span>
+            </ButtonDelete>
+            ): null}
         </Card>) 
         : ( 
-        <>Bye</>
-        
-        )}
-        
+            <>Bye</>
+            
+            )}
     </DivCard>
   )
 }

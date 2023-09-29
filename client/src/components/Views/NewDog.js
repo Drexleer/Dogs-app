@@ -1,8 +1,10 @@
-import { useState} from 'react'
+import { useState, useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link} from 'react-router-dom'
 import { postDog, getTemperaments } from '../../redux/actions'
 import { Container, RightContainer, LeftContainer, Temperaments, BackButton, CreateButton, Text, Icon, IconContainer, WarningSpan} from './StyledDog'
+import Notification from '../Utils/Notification'
+import { validateForm } from './Validaciones'
 
 export default function NewDog() {
 
@@ -10,6 +12,15 @@ export default function NewDog() {
     const temperaments = useSelector(state => state.temperaments);
     const dogs = useSelector(state => state.breeds);
     const dispatch = useDispatch();
+
+    // ESTADO LOCAL
+    const [showNotification, setShowNotification] = useState(false);
+
+    const markAsRead = () => {
+        setShowNotification(false);
+      };
+    // Reset al select de temperaments
+    const selectRef = useRef(null);
 
     //Si no hay temperaments en el estado global, los traemos del back
     if(!temperaments.length) dispatch(getTemperaments());
@@ -29,47 +40,22 @@ export default function NewDog() {
     //* ESTADOS PARA VALIDAR EL FORMULARIO
     const [errors, setErrors] = useState('');
     const [nameError, setNameError] = useState('');
-
-    function validateForm(input) {
-        //console.log(input);
-        let errors = {};
-        // Validamos el name.
-        if (input.name === '') errors.name = 'Coloca un nombre!';
-        else if (!/^[A-Za-z ]+$/.test(input.name))
-            errors.name = 'Sin caracteres especiales o números!';
-        // Validamos los height.
-        if (input.min_height === '')
-            errors.min_height = 'Coloca una altura correcta!';
-        else if (input.min_height < 15)
-            errors.min_height = 'Tiene que medir 15cm o mas!';
-        if (input.max_height === '')
-            errors.max_height = 'Coloca una altura correcta!';
-        else if (input.max_height > 110)
-            errors.max_height = 'Tiene que medir 110cm o menos';
-        if (parseInt(input.min_height) > parseInt(input.max_height))
-            errors.min_height = 'El mínimo no puede superar al mayor';
-        // Validamos los weight.
-        if (input.min_weight === '')
-            errors.min_weight = 'Coloca un peso correcto!';
-        else if (parseInt(input.min_weight) < 1)
-            errors.min_weight = 'Tiene que pesar 1Kg o mas';
-        if (input.max_weight === '')
-            errors.max_weight = 'Coloca un peso correcto!';
-        else if (parseInt(input.max_weight) > 90)
-            errors.max_weight = 'Tiene que pesar 90Kg o menos';
-        if (parseInt(input.min_weight) > parseInt(input.max_weight))
-            errors.min_weight = 'El mínimo no puede ser menor al mayor';
-        // Validamos el life span.
-        if (input.min_life === '') errors.min_life = 'Coloca un año correcto!';
-        else if (input.min_life < 1)
-            errors.min_life = 'Tiene que ser mayor a 1 ';
-        if (input.max_life === '') errors.max_life = 'Coloca un año correcto!';
-        else if (input.max_life > 90)
-            errors.max_life = 'Tiene que vivir 20 o menos';
-        if (parseInt(input.min_life) > parseInt(input.max_life))
-            errors.min_life = 'El máximo no puede ser menor al mayor';
-        return errors;
+    
+    function handleCreateButtonClick() {
+        // Verificar si algún campo obligatorio está vacío
+        if (
+            !form.name ||
+            !form.min_height ||
+            !form.max_height ||
+            !form.min_weight ||
+            !form.max_weight ||
+            !form.min_life ||
+            !form.max_life
+        ) {
+            window.alert('Por favor completa todos los campos');
+        }
     }
+
     function verifyImage (url) {
         new Promise((resolve) => {
             const img = new Image();
@@ -115,12 +101,13 @@ export default function NewDog() {
         const nameExists = dogs.some((dog) => dog.name === form.name);
         if (nameExists) {
             setNameError('El Perro ya existe. Elija otro nombre.');
-            window.alert('El Perro ya existe. Elija otro nombre.');
+            <Notification/>
         } else {
             setNameError('');
             dispatch(postDog(form))
                 .then(() => {
-                    window.alert('Perro creado');
+                    setShowNotification(true);
+                    selectRef.current.value = 'DEFAULT';
                     setForm({
                         name: '',
                         min_height: '',
@@ -257,6 +244,7 @@ export default function NewDog() {
                 <div>
                     <label>Temperaments:</label>
                     <select
+                        ref={selectRef}
                         defaultValue={'DEFAULT'}
                         onChange={(e) => {
                             handleSelectTemperament(e.target.value);
@@ -275,7 +263,6 @@ export default function NewDog() {
                             })}
                     </select>
                 </div>
-                <div>
                     <ul>
                         {form.temperaments &&
                             form.temperaments.map((option, index) => (
@@ -286,13 +273,14 @@ export default function NewDog() {
                             </div>
                         ))}
                     </ul>
-                </div>
                 <div>
                 <CreateButton
                     className="button"
                     type='submit'
                     onClick={(e) => {
-                        createBreed(e);
+                        if(!handleCreateButtonClick()){
+                            createBreed(e);
+                        } 
                     }}
                 >
                     <Text>CreateDog</Text>
@@ -306,23 +294,7 @@ export default function NewDog() {
                 {nameError && <div className="error">{nameError}</div>}
                 </div>
             </RightContainer>
+            {showNotification && <Notification markAsRead={markAsRead}/>}
         </Container>
     )
 }
-
-
-/*
-<div>
-                                    <button
-                                        className="listButtonTemp"
-                                        onClick={() =>
-                                            handleDeleteTemperament(option)
-                                        }
-                                    >
-                                        <Temperaments key={index}>
-                                            {option}
-                                        </Temperaments>
-                                        <span className="close-icon">x</span>
-                                    </button>
-                                </div>
-*/
