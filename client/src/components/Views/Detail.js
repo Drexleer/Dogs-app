@@ -19,6 +19,7 @@ import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
 import {FaTemperatureHigh} from 'react-icons/fa';
 import { MdNumbers } from 'react-icons/md';
 import Loading from '../loading/loading';
+import DeleteDog from '../Utils/DeleteDog';
 
 export default function Detail() {
 
@@ -30,6 +31,7 @@ export default function Detail() {
     const breedDetail = useSelector(state => state.breedDetail);
     // Estado local para el loading
     const [showLoading, setShowLoading] = useState(true);
+    const [deleteDog, setDeleteDog] = useState(false);
 
     const handleDelete = async (dogId) => {
         const confirmed = window.confirm('Are you sure you want to delete this dog?');
@@ -37,8 +39,11 @@ export default function Detail() {
         if(confirmed) {
             try {
                 await axios.delete(`http://localhost:3001/delete/${dogId}`)
-                window.alert('The dog has been successfully deleted.');
-                navigate('/home')
+                setDeleteDog(true);
+                setTimeout(() => {
+                    setDeleteDog(false);
+                    navigate('/home')
+                }, 3000);
             } catch (error) {
                 console.error('Error al eliminar el perro:', error);
             }
@@ -55,6 +60,7 @@ export default function Detail() {
 
   return (
     <DivCard>
+        {deleteDog ? (<DeleteDog/>): null}
         {showLoading ? <Loading/> : null}
         {!showLoading && breedDetail.length ? ( 
             <Card>
