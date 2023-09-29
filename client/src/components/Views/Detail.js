@@ -14,12 +14,14 @@ import {
     TextH3,
     LearnMoreButton,
     ButtonDelete,
+    DivError,
     ButtonTemperament } from './StyledDetail';
 import { GiWeight, GiBodyHeight, GiHeartBeats} from 'react-icons/gi';
 import {FaTemperatureHigh} from 'react-icons/fa';
 import { MdNumbers } from 'react-icons/md';
 import Loading from '../loading/loading';
 import DeleteDog from '../Utils/DeleteDog';
+import Error404 from '../Utils/error404';
 
 export default function Detail() {
 
@@ -94,8 +96,9 @@ export default function Detail() {
             ): null}
         </Card>) 
         : ( 
-            <>Bye</>
-            
+            <DivError>
+                <Error404/>
+            </DivError>
             )}
     </DivCard>
   )

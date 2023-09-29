@@ -9,10 +9,11 @@ import LandingPage from './components/LandingPage/LandingPage';
 import Detail from './components/Views/Detail';
 import About from './components/Views/About';
 import NewDog from './components/Views/NewDog';
+import Error404 from './components/Utils/error404';
 
 function App() {
 
-  const { pathname } = useLocation();
+  //const { pathname } = useLocation();
   const [access, setAccess] = useState(false);
   const navigate = useNavigate()
 
@@ -26,9 +27,9 @@ function App() {
         access && navigate('/home')
       })
   }
-  useEffect(() => {
-    !access && navigate('/');
-  }, [access]);
+  // useEffect(() => {
+  //   !access && navigate('/');
+  // }, [access]);
 
   return (
     <div className="App">
@@ -39,7 +40,7 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/home/:id' element={<Detail/>} />
         <Route path='/home/about' element={<About/>} />
-        {/* <Route path='/*' element={<h1>404</h1>} /> */}
+        <Route path='*' element={<Error404/>}/>
         <Route path='/home/newDog' element={<NewDog/>} />
       </Routes>
     </div>

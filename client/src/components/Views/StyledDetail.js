@@ -230,3 +230,6 @@ svg {
   fill: #e8e8e8;
 }
 `;
+export const DivError = styled.div`
+width: 100%;
+`;
