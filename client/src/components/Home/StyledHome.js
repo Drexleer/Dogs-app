@@ -1,10 +1,21 @@
 import styled, {keyframes} from "styled-components";
 import { beige, beigeOscuro, Ecru} from "../Utils/Colors";
-import { Link } from "react-router-dom";
+
+export const DivContainer = styled.div`
+position: relative;
+  gap: 20px;
+`;
+
+export const Logo = styled.img`
+    height: 80px;
+    margin-top: 10px;
+`;
 
 export const HomeContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  width: fit-content;
+  padding-left: 1em;
   gap: 20px;
   justify-content: center;
   align-items: center;
@@ -149,11 +160,6 @@ export const ResetButton = styled.button`
   &:focus svg {
     animation: ${spinAnimation} 0.5s linear;
   }
-`;
-
-export const LinkStyled = styled(Link)`
-  display: flex;
-  text-decoration: none;
 `;
 
 export const ImgNewDog = styled.img`

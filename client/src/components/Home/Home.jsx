@@ -7,7 +7,7 @@ import {
 } from '../../redux/actions';
 import Pagination from "../Pagination/Pagination";
 //import { Link } from "react-router-dom";
-import { HomeContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox, LinkStyled, ImgNewDog, NewDogButton } from './StyledHome'
+import { HomeContainer, Logo, DivContainer, FiltersContainer, Input, SearchButton, ContainerSearch, ResetButton, SelectElement, SelectBox} from './StyledHome'
 import { FaSearch } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import Loading from "../loading/loading";
@@ -85,27 +85,22 @@ export default function Home() {
   const handleInputSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  
   const handleSearchButtonClick = () => {
     // Iniciar la búsqueda cuando se hace clic en el botón
     dispatch(getDogName(searchTerm));
     setCurrentPage(1);
     setSearchTerm("");
   };
-
-
+  
+  
   return (
     <div>
       {showLoading ? <Loading /> : null}
       {!showLoading && breedsFiltered.length ? (
-        <>
+        <DivContainer>
           <ContainerSearch>
-            <LinkStyled to={"/home/newDog"}>
-              <NewDogButton>
-                <ImgNewDog src="https://static.vecteezy.com/system/resources/previews/009/637/596/original/dog-cartoon-cute-animal-file-png.png" alt="create-dog" />
-                CreateDog
-              </NewDogButton>
-            </LinkStyled>
+          <Logo src="https://i.imgur.com/Tk7QvYH.png" alt="logo" />
             <Input
               type="text"
               placeholder="Search..."
@@ -191,14 +186,14 @@ export default function Home() {
           <HomeContainer>
             {currentDogs.map((dog) => (
               <Card
-                key={dog.id}
-                id={dog.id}
-                name={dog.name}
-                image={dog.image}
-                temperaments={dog.temperaments}
-                weight={dog.weight}
+              key={dog.id}
+              id={dog.id}
+              name={dog.name}
+              image={dog.image}
+              temperaments={dog.temperaments}
+              weight={dog.weight}
               />
-            ))}
+              ))}
           </HomeContainer>
           <Pagination
             currentPage={currentPage}
@@ -207,7 +202,7 @@ export default function Home() {
             onPageChange={paginate}
             currentDogs={currentDogs}
           />
-        </>
+        </DivContainer>
       ) : (
         <Error404/>
       )}

@@ -34,6 +34,12 @@ export default function Detail() {
     // Estado local para el loading
     const [showLoading, setShowLoading] = useState(true);
     const [deleteDog, setDeleteDog] = useState(false);
+    const [dogId, setDogId] = useState(null);
+
+    const handleClick = () => {
+        const id = breedDetail[0].id;
+        setDogId(id);
+    };
 
     const handleDelete = async (dogId) => {
         const confirmed = window.confirm('Are you sure you want to delete this dog?');
@@ -77,10 +83,21 @@ export default function Detail() {
                         : null}
                 </Ul>
             </div>
-            <div>
+            <div style={{margin: "1em"}}>
                 <TextH1>{breedDetail[0].name}</TextH1>
-                <TextH2>ID<MdNumbers color='D7861A'/>:</TextH2>
-                <TextH3>{breedDetail[0].id}</TextH3>
+                <TextH2>ID<MdNumbers color='#B26400'/>:</TextH2>
+                <div style={{display:"flex", flexDirection:"column"}}>
+                {breedDetail[0].id.length > 5 ? (
+                        <TextH3 style={{color:"#B26400"}}>Created by DataBase</TextH3>
+                    ) : (
+                        <TextH3 style={{color:"#B26400"}}>Created by Api</TextH3>
+                )}
+                {dogId !== null ? (
+                    <TextH3>ID: {dogId}</TextH3>
+                        ) : (
+                    <ButtonTemperament style={{width:"90px", marginLeft:"1.2em"}} onClick={handleClick}>Show ID</ButtonTemperament>
+                    )}
+                </div>
                 <TextH2>Weight <GiWeight color='4C4C4C'/>:</TextH2>
                 <TextH3>{breedDetail[0].weight.join(' - ')} Kg.</TextH3>
                 <TextH2>Height <GiBodyHeight/>:</TextH2>

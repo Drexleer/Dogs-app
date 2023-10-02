@@ -233,3 +233,12 @@ svg {
 export const DivError = styled.div`
 width: 100%;
 `;
+
+export const ButtonID = styled.button`
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
