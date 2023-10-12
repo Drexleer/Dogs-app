@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  display: flex;
   width: 400px;
   height: 200px;
-  padding: 0.8em;
-  background: #f5f5f5;
-  position: relative;
-  overflow: visible;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  margin: 1em;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(15px);
+  margin-top: 1em;
 `;
 
 export const CardImg = styled.img`

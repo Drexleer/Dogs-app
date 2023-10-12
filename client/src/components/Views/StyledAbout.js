@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 export const DivContainer = styled.div`
   display: flex;
@@ -6,7 +6,7 @@ export const DivContainer = styled.div`
   align-items: center;
   text-align: center;
   height: 100%;
-  background-image: url("https://wallpapercave.com/wp/wp11842089.jpg"); 
+  background-image: url("https://w.wallhaven.cc/full/v9/wallhaven-v9mg65.png"); 
 `;
 
 
@@ -232,5 +232,67 @@ export const ButtonRandom = styled.button`
     background-color: #fcf414;
     box-shadow: none;
     transform: translateY(4px);
+  }
+`;
+
+//* Loader
+
+const slideAnimation = keyframes`
+  0%, 100% {
+    bottom: -35px;
+  }
+  25%, 75% {
+    bottom: -2px;
+  }
+  20%, 80% {
+    bottom: 2px;
+  }
+`;
+
+const rotateAnimation = keyframes`
+  0% {
+    transform: rotate(-15deg);
+  }
+  25%, 75% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(25deg);
+  }
+`;
+
+export const Loader = styled.div`
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background: #FFF;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 5em;
+  
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotate(45deg) translate(30%, 40%);
+    background: #ff9371;
+    box-shadow: 32px -34px 0 5px #ff3d00;
+    animation: ${slideAnimation} 2s infinite ease-in-out alternate;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ff3d00;
+    transform: rotate(0deg);
+    transform-origin: 35px 145px;
+    animation: ${rotateAnimation} 2s infinite ease-in-out;
   }
 `;

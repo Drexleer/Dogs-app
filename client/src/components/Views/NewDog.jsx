@@ -50,7 +50,8 @@ export default function NewDog() {
             !form.min_weight ||
             !form.max_weight ||
             !form.min_life ||
-            !form.max_life
+            !form.max_life ||
+            !form.temperaments.length
         ) {
             window.alert('Por favor completa todos los campos');
         }
@@ -102,7 +103,8 @@ export default function NewDog() {
         if (nameExists) {
             setNameError('El Perro ya existe. Elija otro nombre.');
             <Notification/>
-        } else {
+        } 
+        else {
             setNameError('');
             dispatch(postDog(form))
                 .then(() => {

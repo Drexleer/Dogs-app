@@ -19,6 +19,7 @@ import { DivContainer,
   Github,
   Discord,
   ButtonRandom,
+  Loader,
   CardHeader} from './StyledAbout';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -141,7 +142,7 @@ export default function About() {
         {image ? (
           <ImageMedia src={image} alt='Media-1'/>
         ) : (
-          <h1>Loading...</h1>
+          <Loader/>
         )}
         <ButtonRandom onClick={handleRandomIndex}>Random Image</ButtonRandom>
       </DivAbajo>

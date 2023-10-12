@@ -12,6 +12,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import Loading from "../loading/loading";
 import Error404 from "../Utils/error404";
+import ErrorSearch from "../Utils/ErrorSearch";
 
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
 
   //* Estados locales
   const [showLoading, setShowLoading] = useState(true);
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     dispatch(getAllDogs())
@@ -86,18 +88,33 @@ export default function Home() {
     setSearchTerm(e.target.value);
   };
   
-  const handleSearchButtonClick = () => {
+  const handleSearchButtonClick = async () => {
     // Iniciar la búsqueda cuando se hace clic en el botón
-    dispatch(getDogName(searchTerm));
-    setCurrentPage(1);
-    setSearchTerm("");
+    try {
+      const result = await dispatch(getDogName(searchTerm))
+      // Si no se encontraron resultados, mostrar un mensaje de error
+      if(result.length === 0) {
+        setError(true)
+        // Configurar un temporizador para restablecer el estado de error después de 3 segundos
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+      } else {
+        setError(false);
+        setCurrentPage(1);
+        setSearchTerm("");
+      }
+    } catch (error) {
+      setError("Ocurrió un error al buscar.");
+    }
   };
   
   
   return (
     <div>
       {showLoading ? <Loading /> : null}
-      {!showLoading && breedsFiltered.length ? (
+      {!showLoading && !error ? (
+      breedsFiltered.length ? (
         <DivContainer>
           <ContainerSearch>
           <Logo src="https://i.imgur.com/Tk7QvYH.png" alt="logo" />
@@ -205,6 +222,9 @@ export default function Home() {
         </DivContainer>
       ) : (
         <Error404/>
+      )
+      ) : (
+        <ErrorSearch setError={setError}/> // Muestra el componente de error en otras situaciones de error
       )}
     </div>
   );

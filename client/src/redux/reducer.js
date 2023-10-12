@@ -51,7 +51,7 @@ function dogReducer ( state = initialState, action) {
             }
         
         case ORDER_BY_TEMPERAMENT:
-            const orderByTemperament = state.breeds.filter(e => {
+            const orderByTemperament = [...state.breedsFiltered].filter(e => {
                 // Verificamos si e.temperaments es un array y contiene action.payload
                 return Array.isArray(e.temperaments) && e.temperaments.includes(action.payload);
             });
@@ -95,8 +95,7 @@ function dogReducer ( state = initialState, action) {
             // Si la acción no es ni 'major' ni 'minor', no cambies el orden.
             return 0;
         }
-  });
-  console.log(breedsByWeight); // Agrega esta línea para depurar
+  }); 
   return {
     ...state,
     breedsFiltered: breedsByWeight,

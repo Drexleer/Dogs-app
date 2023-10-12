@@ -32,7 +32,7 @@ export function validateForm(input) {
     else if (input.min_life < 1)
         errors.min_life = 'Tiene que ser mayor a 1 ';
     if (input.max_life === '') errors.max_life = 'Coloca un año correcto';
-    else if (input.max_life > 90)
+    else if (input.max_life > 20)
         errors.max_life = 'Tiene que vivir 20 o menos';
     if (parseInt(input.min_life) > parseInt(input.max_life))
         errors.min_life = 'El máximo no puede ser menor al mayor';
